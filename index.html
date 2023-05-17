@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desarrollador: devIDol</title>
     <meta name="description" content="Iván Daniel Olmos Beltrán - Desarrollo - Cochabamba - Bolivia">
+    <script src="vue.js"></script>
 </head>
 <body>
     <div id="app">
         <div class="container">
             <div class="banner">
-                Hola, desarrollo de aplicaciones web, sitios web y páginas web, aplicaciones de escritorio y aplicaciones móviles
+                {{mensaje}}
             </div>
             <div class="servicios">
     
@@ -25,4 +26,33 @@
         </div>
     </div>
 </body>
+<script >
+    var l=new Vue({
+    el: '#app',
+    data: {
+      servicios: ["Web Development","Fullstack Development","Database Administration","Devops Services"],
+      mensaje:"",index:0
+    },methods:{
+        deletrear(){
+            let index = 0;
+            setInterval(() => {
+                this.mensaje = this.servicios[this.index].substring(0, index)+'|';
+                index++;
+                if (index > this.servicios[this.index].length) {
+                    this.index++;
+                    index=0;
+                }
+                if (this.index == this.servicios.length) {
+                    this.index = 0;
+                    index=0;
+                }
+            }, 200);
+        }
+    },mounted(){
+        this.deletrear();
+    }
+  });
+</script>
+<footer>
+</footer>
 </html>
