@@ -1,3 +1,16 @@
-*{
-    font-family: 'Courier New', Courier, monospace;
-}
+:root {
+    --background-color: #ffffff; /* Color de fondo en modo claro */
+    --text-color: #000000; /* Color de texto en modo claro */
+  }
+  
+  .dark {
+    --background-color: #000000; /* Color de fondo en modo oscuro */
+    --text-color: #ffffff; /* Color de texto en modo oscuro */
+  }
+  body {
+    background-color: var(--background-color)!important;
+    color: var(--text-color)!important;
+  }
+  .btn-text{
+    color: var(--text-color)!important;
+  }

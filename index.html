@@ -4,34 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desarrollador: devIDol</title>
+    <title>Desarrollador: DevIDol</title>
     <meta name="description" content="Iván Daniel Olmos Beltrán - Desarrollo - Cochabamba - Bolivia">
     <script src="vue.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body>
     <div id="app">
-        <div class="container">
-            <div class="banner">
-                {{mensaje}}
-            </div>
-            <div class="servicios">
-    
-            </div>
-            <div class="nosotros">
-    
-            </div>
-            <div class="curriculum">
-    
-            </div>
-        </div>
+                <div>
+                    {{mensaje}}
+                </div>
+                <button class="btn btn-outline-warning btn-text" @click="changeMode"><i :class="(darkMode?'fa-sharp fa-solid fa-sun':'fa-solid fa-moon')"></i></button>
+                <div>
+                </div>
     </div>
-</body>
-<script >
+<script>
     var l=new Vue({
     el: '#app',
     data: {
-      servicios: ["Web Development","Fullstack Development","Database Administration","Devops Services"],
-      mensaje:"",index:0
+        servicios: ["Web Development","Fullstack Development","Database Administration","Devops Services"],
+        mensaje:"",
+        index:0,
+        darkMode: false
     },methods:{
         deletrear(){
             let index = 0;
@@ -47,12 +45,17 @@
                     index=0;
                 }
             }, 200);
+        },
+         changeMode() {
+            this.darkMode = !this.darkMode;
+            document.body.classList.toggle('dark');
         }
     },mounted(){
         this.deletrear();
     }
   });
 </script>
+</body>
 <footer>
 </footer>
 </html>
