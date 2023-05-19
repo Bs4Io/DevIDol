@@ -15,12 +15,53 @@
 </head>
 <body>
     <div id="app">
-                <div>
-                    {{mensaje}}
+        <div class="container-fluid">
+            <div class="row rowImage banner">
+                <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">DevIDol</a>
+                    <button class="navbar-toggler btn-text" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-warning btn-text" @click="changeMode"><i :class="(darkMode?'fa-sharp fa-solid fa-sun':'fa-solid fa-moon')"></i></button>
+                    </div>
                 </div>
-                <button class="btn btn-outline-warning btn-text" @click="changeMode"><i :class="(darkMode?'fa-sharp fa-solid fa-sun':'fa-solid fa-moon')"></i></button>
-                <div>
+                </nav>
+                <div class="col-md-6 m-auto">
+                    <div class="p-5 text-white">
+    
+                        <div class="text-center">
+                            <div class="container">
+                                <p class="text-center mt4">
+                                    Experto en
+                                </p>
+                                <h1 class="text-center  encabezado">
+    
+                                    <span class="d-block">{{mensaje}}|</span>
+                                </h1>
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
+            </div>
+        </div>
     </div>
 <script>
     var l=new Vue({
@@ -29,20 +70,28 @@
         servicios: ["Web Development","Fullstack Development","Database Administration","Devops Services"],
         mensaje:"",
         index:0,
-        darkMode: false
+        darkMode: true
     },methods:{
         deletrear(){
             let index = 0;
+            let bandera=true;
             setInterval(() => {
-                this.mensaje = this.servicios[this.index].substring(0, index)+'|';
-                index++;
-                if (index > this.servicios[this.index].length) {
-                    this.index++;
-                    index=0;
-                }
-                if (this.index == this.servicios.length) {
-                    this.index = 0;
-                    index=0;
+                this.mensaje = this.servicios[this.index].substring(0, index);
+                if(bandera){
+                    index++;
+                    if (index == this.servicios[this.index].length) {
+                        bandera=false;
+                    }
+                }else{
+                    index--;
+                    if (index < 0) {
+                        
+                        this.index++;
+                        if(this.index==this.servicios.length){
+                            this.index=0;
+                        }
+                        bandera=true;
+                    }
                 }
             }, 200);
         },
@@ -52,6 +101,7 @@
         }
     },mounted(){
         this.deletrear();
+        this.changeMode();
     }
   });
 </script>
