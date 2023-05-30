@@ -15,7 +15,7 @@
     background-color: var(--background-color)!important;
     color: var(--text-color)!important;
   }
-  .btn-text,a,p,h1{
+  .btn-text,label,a,p,h1{
     color: var(--text-color)!important;
   }
   h1,h2,h3{

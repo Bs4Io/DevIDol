@@ -26,16 +26,19 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <label class="nav-link active" aria-current="page" href="#">{{actual.navs[0]}}</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <label class="nav-link" href="#">{{actual.navs[1]}}</label>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <label class="nav-link" href="#">{{actual.navs[2]}}</label>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <label class="nav-link" href="#">{{actual.navs[3]}}</label>
+                        </li>
+                        <li class="nav-item">
+                            <label class="nav-link" @click="reload()">{{actual.navs[4]}}</label>
                         </li>
                     </ul>
                     <button class="btn btn-outline-warning btn-text" @click="changeMode"><i :class="(darkMode?'fa-sharp fa-solid fa-sun':'fa-solid fa-moon')"></i></button>
@@ -48,7 +51,7 @@
                         <div class="text-center">
                             <div class="container">
                                 <p class="text-center mt4">
-                                    Experto en
+                                    {{actual.navs[5]}}
                                 </p>
                                 <h1 class="text-center  encabezado">
     
@@ -67,19 +70,35 @@
     var l=new Vue({
     el: '#app',
     data: {
-        servicios: ["Web Development","Fullstack Development","Database Administration","Devops Services"],
+        locale:true,
+        actual:{},
+        en:{
+            servicios: ["Web Development","Fullstack Development","Database Administration and Design","Devops Services"],
+            navs:["About me","My Skills","My Experience","Contact me", "Leéme en Español","Expert in"]
+        },
+        es:{
+            servicios: ["Desarrollo Web","Desarrollo FullStack","Administracion y Diseño de Bases de Datos","Servicios Devops"],
+            navs:["Sobre mí","Mis Habilidades","Mi Experiencia","Contáctame","Readme in English","Experto en"]
+        },
         mensaje:"",
         index:0,
-        darkMode: true
+        darkMode: true,
+        intervalos:''
     },methods:{
+        reload(){
+            this.locale=!this.locale;
+            clearInterval(this.intervalos);
+            this.deletrear();
+        },
         deletrear(){
+            this.actual=this.locale==true?this.en:this.es;
             let index = 0;
             let bandera=true;
-            setInterval(() => {
-                this.mensaje = this.servicios[this.index].substring(0, index);
+            this.intervalos=setInterval(() => {
+                this.mensaje = this.actual.servicios[this.index].substring(0, index);
                 if(bandera){
                     index++;
-                    if (index == this.servicios[this.index].length) {
+                    if (index == this.actual.servicios[this.index].length) {
                         bandera=false;
                     }
                 }else{
@@ -87,7 +106,7 @@
                     if (index < 0) {
                         
                         this.index++;
-                        if(this.index==this.servicios.length){
+                        if(this.index==this.actual.servicios.length){
                             this.index=0;
                         }
                         bandera=true;
