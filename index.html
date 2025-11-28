@@ -6,125 +6,1491 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desarrollador: DevIDol</title>
     <meta name="description" content="Iván Daniel Olmos Beltrán - Desarrollo - Cochabamba - Bolivia">
-    <script src="vue.js"></script>
-    <script src="bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="google-site-verification" content="c_gOZNvVvGrtBtursKTr1ffQZzN9yOD9-vplgtXe_to" />
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --banner-color: #f8f9fa;
+            --text-color: #333333;
+            --titles-color: #E48E00;
+            --accent-color: #E48E00;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark {
+            --background-color: #0a0a0a;
+            --banner-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --titles-color: #F60BFE;
+            --accent-color: #F60BFE;
+            --card-bg: #1a1a1a;
+            --shadow: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        body {
+            background-color: var(--background-color) !important;
+            color: var(--text-color) !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background-color: var(--banner-color) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px var(--shadow);
+            padding: 1rem 2rem;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--titles-color) !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .nav-link {
+            color: var(--text-color) !important;
+            margin: 0 0.5rem;
+            font-weight: 500;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--banner-color) 0%, var(--background-color) 100%);
+            padding: 4rem 2rem;
+            position: relative;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(128,128,128,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .greeting-text {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .typing-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--titles-color);
+            margin-bottom: 2rem;
+            min-height: 4rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 3rem;
+            background-color: var(--accent-color);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .profile-container {
+            margin-top: 3rem;
+            animation: fadeInUp 1.5s ease;
+        }
+        
+        .profile-image-wrapper {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .profile-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--accent-color), var(--titles-color));
+            border-radius: 50%;
+            z-index: -1;
+            animation: rotate 4s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--background-color);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .profile-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--titles-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            border: 5px solid var(--background-color);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .profile-name {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .profile-name h2 {
+            font-size: 2rem;
+            color: var(--titles-color) !important;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .profile-name p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow);
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+        
+        .btn-mode {
+            border: 2px solid var(--accent-color) !important;
+            color: var(--accent-color) !important;
+            background-color: transparent !important;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-mode:hover {
+            background-color: var(--accent-color) !important;
+            color: white !important;
+            transform: scale(1.05);
+        }
+        
+        .navbar-toggler {
+            border-color: var(--accent-color) !important;
+            color: var(--accent-color) !important;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem rgba(228, 142, 0, 0.25);
+        }
+        
+        /* Sections Styling */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--titles-color) !important;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--titles-color));
+            display: block;
+            margin: 2rem auto 0;
+            border-radius: 2px;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-stats {
+            flex: 1;
+            min-width: 300px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--titles-color) !important;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-category {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .skill-category h3 {
+            color: var(--titles-color) !important;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .skill-category i {
+            font-size: 1.5rem;
+        }
+        
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .skill-bar {
+            height: 10px;
+            background-color: var(--background-color);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--titles-color));
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+        
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-color), var(--titles-color));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            text-align: left;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+            text-align: right;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border: 4px solid var(--background-color);
+            border-radius: 50%;
+            top: 30px;
+            z-index: 1;
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-content h3 {
+            color: var(--titles-color) !important;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content h4 {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-content p {
+            line-height: 1.6;
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-color), var(--titles-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+        
+        .project-content {
+            padding: 2rem;
+        }
+        
+        .project-content h3 {
+            color: var(--titles-color) !important;
+            margin-bottom: 1rem;
+        }
+        
+        .project-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background-color: var(--background-color);
+            color: var(--accent-color);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-link {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .project-link:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), var(--titles-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .contact-details h4 {
+            color: var(--titles-color) !important;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-details p {
+            margin: 0;
+        }
+        
+        .contact-form {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color) !important;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--background-color);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--titles-color));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--banner-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 5rem;
+            border-top: 2px solid var(--accent-color);
+        }
+        
+        footer p {
+            margin: 0;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .typing-text {
+                font-size: 2rem;
+            }
+            
+            .profile-image-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .greeting-text {
+                font-size: 1rem;
+            }
+            
+            .profile-name h2 {
+                font-size: 1.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+                text-align: left !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <div class="container-fluid">
-            <div class="row rowImage banner">
-                <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">DevIDol</a>
-                    <button class="navbar-toggler btn-text" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">DevIDol</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                        <label class="nav-link active" aria-current="page" href="#">{{actual.navs[0]}}</a>
+                            <a class="nav-link" href="#about">{{actual.navs[0]}}</a>
                         </li>
                         <li class="nav-item">
-                        <label class="nav-link" href="#">{{actual.navs[1]}}</label>
+                            <a class="nav-link" href="#skills">{{actual.navs[1]}}</a>
                         </li>
                         <li class="nav-item">
-                        <label class="nav-link" href="#">{{actual.navs[2]}}</label>
+                            <a class="nav-link" href="#experience">{{actual.navs[2]}}</a>
                         </li>
                         <li class="nav-item">
-                            <label class="nav-link" href="#">{{actual.navs[3]}}</label>
+                            <a class="nav-link" href="#projects">{{actual.navs[7]}}</a>
                         </li>
                         <li class="nav-item">
-                            <label class="nav-link" @click="reload()">{{actual.navs[4]}}</label>
+                            <a class="nav-link" href="#contact">{{actual.navs[3]}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <label class="nav-link" @click="reload()" style="cursor: pointer;">{{actual.navs[4]}}</label>
                         </li>
                     </ul>
-                    <button class="btn btn-outline-warning btn-text" @click="changeMode"><i :class="(darkMode?'fa-sharp fa-solid fa-sun':'fa-solid fa-moon')"></i></button>
+                    <button class="btn btn-mode ms-3" @click="changeMode">
+                        <i :class="(darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon')"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="text-center">
+                    <p class="greeting-text">{{actual.navs[5]}}</p>
+                    <h1 class="typing-text">
+                        {{mensaje}}<span class="cursor">|</span>
+                    </h1>
+                </div>
+
+                <!-- Profile Section -->
+                <div class="profile-container">
+                    <div class="profile-image-wrapper">
+                        <!-- Puedes reemplazar esta imagen con tu foto -->
+                        <div class="profile-placeholder">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <!-- Para usar una imagen real, comenta el div de arriba y descomenta esto:
+                        <img src="tu-foto.jpg" alt="Developer Profile" class="profile-image">
+                        -->
+                    </div>
+                    
+                    <div class="profile-name">
+                        <h2>Iván Daniel Olmos Beltrán</h2>
+                        <p>Full Stack Developer | Cochabamba, Bolivia</p>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Email">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
                     </div>
                 </div>
-                </nav>
-                <div class="col-md-6 m-auto">
-                    <div class="p-5 text-white">
-    
-                        <div class="text-center">
-                            <div class="container">
-                                <p class="text-center mt4">
-                                    {{actual.navs[5]}}
-                                </p>
-                                <h1 class="text-center  encabezado">
-    
-                                    <span class="d-block">{{mensaje}}|</span>
-                                </h1>
-                                
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>{{actual.about.title}}</h2>
+                    <p>{{actual.about.subtitle}}</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>{{actual.about.text1}}</p>
+                        <p>{{actual.about.text2}}</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <i class="fa-solid fa-code"></i>
+                            <h3>5+</h3>
+                            <p>{{actual.about.stat1}}</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-project-diagram"></i>
+                            <h3>50+</h3>
+                            <p>{{actual.about.stat2}}</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-users"></i>
+                            <h3>30+</h3>
+                            <p>{{actual.about.stat3}}</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fa-solid fa-trophy"></i>
+                            <h3>15+</h3>
+                            <p>{{actual.about.stat4}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section" style="background-color: var(--banner-color);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>{{actual.skills.title}}</h2>
+                    <p>{{actual.skills.subtitle}}</p>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-category" v-for="category in actual.skills.categories" :key="category.name">
+                        <h3><i :class="category.icon"></i> {{category.name}}</h3>
+                        <div class="skill-item" v-for="skill in category.items" :key="skill.name">
+                            <div class="skill-name">
+                                <span>{{skill.name}}</span>
+                                <span>{{skill.level}}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" :style="{width: skill.level + '%'}"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
             </div>
-        </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>{{actual.experience.title}}</h2>
+                    <p>{{actual.experience.subtitle}}</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item" v-for="exp in actual.experience.items" :key="exp.title">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">{{exp.date}}</span>
+                            <h3>{{exp.title}}</h3>
+                            <h4>{{exp.company}}</h4>
+                            <p>{{exp.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section" style="background-color: var(--banner-color);">
+            <div class="container">
+                <div class="section-title">
+                    <h2>{{actual.projects.title}}</h2>
+                    <p>{{actual.projects.subtitle}}</p>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card" v-for="project in actual.projects.items" :key="project.title">
+                        <div class="project-image">
+                            <i :class="project.icon"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>{{project.title}}</h3>
+                            <p>{{project.description}}</p>
+                            <div class="project-tags">
+                                <span class="tag" v-for="tag in project.tags" :key="tag">{{tag}}</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fa-brands fa-github"></i> Code</a>
+                                <a href="#" class="project-link"><i class="fa-solid fa-external-link"></i> {{actual.projects.liveText}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>{{actual.contact.title}}</h2>
+                    <p>{{actual.contact.subtitle}}</p>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p>Cuervodelolmo@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>{{actual.contact.phone}}</h4>
+                                <p>+591 63890048</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>{{actual.contact.location}}</h4>
+                                <p>Cochabamba, Bolivia</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form @submit.prevent="submitForm">
+                            <div class="form-group">
+                                <label>{{actual.contact.form.name}}</label>
+                                <input type="text" v-model="formData.name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" v-model="formData.email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>{{actual.contact.form.subject}}</label>
+                                <input type="text" v-model="formData.subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label>{{actual.contact.form.message}}</label>
+                                <textarea v-model="formData.message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">{{actual.contact.form.send}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <p>&copy; {{ currentYear }} DevIDol - Iván Daniel Olmos Beltrán. {{actual.footer}}</p>
+            </div>
+        </footer>
     </div>
-<script>
-    var l=new Vue({
-    el: '#app',
-    data: {
-        locale:true,
-        actual:{},
-        en:{
-            servicios: ["Web Development","Fullstack Development","Database Administration and Design","Devops Services"],
-            navs:["About me","My Skills","My Experience","Contact me", "Leéme en Español","Expert in"]
-        },
-        es:{
-            servicios: ["Desarrollo Web","Desarrollo FullStack","Administracion y Diseño de Bases de Datos","Servicios Devops"],
-            navs:["Sobre mí","Mis Habilidades","Mi Experiencia","Contáctame","Readme in English","Experto en"]
-        },
-        mensaje:"",
-        index:0,
-        darkMode: true,
-        intervalos:''
-    },methods:{
-        reload(){
-            this.locale=!this.locale;
-            clearInterval(this.intervalos);
-            this.deletrear();
-        },
-        deletrear(){
-            this.actual=this.locale==true?this.en:this.es;
-            let index = 0;
-            let bandera=true;
-            this.intervalos=setInterval(() => {
-                this.mensaje = this.actual.servicios[this.index].substring(0, index);
-                if(bandera){
-                    index++;
-                    if (index == this.actual.servicios[this.index].length) {
-                        bandera=false;
-                    }
-                }else{
-                    index--;
-                    if (index < 0) {
-                        
-                        this.index++;
-                        if(this.index==this.actual.servicios.length){
-                            this.index=0;
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                locale: true,
+                actual: {},
+                formData: {
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: ''
+                },
+                currentYear: new Date().getFullYear(),
+                en: {
+                    servicios: [
+                        "Web Development",
+                        "Fullstack Development",
+                        "Database Administration",
+                        "DevOps Services"
+                    ],
+                    navs: [
+                        "About me",
+                        "My Skills",
+                        "My Experience",
+                        "Contact me",
+                        "Léeme en Español",
+                        "Expert in",
+                        "",
+                        "My Projects"
+                    ],
+                    about: {
+                        title: "About Me",
+                        subtitle: "Get to know me better",
+                        text1: "A Full Stack Developer with Knowledge in DevOps using GCP, a Programmer with Strong Problem-Solving Skills, an Expert DBA specializing in Structured Databases with MySQL and MariaDB, and Proficient in Linux and MacOS Operating Systems.",
+                        text2: "I specialize in Node.js with TypeScript and Vue 3, applying robust software architecture principles like Hexagonal Architecture and Clean Code. My skill set includes both relational (MySQL, MariaDB) and non-relational (MongoDB) databases.",
+                        stat1: "Years Experience",
+                        stat2: "Projects Completed",
+                        stat3: "Happy Clients",
+                        stat4: "Technologies Mastered"
+                    },
+                    skills: {
+                        title: "My Skills",
+                        subtitle: "Technologies I master",
+                        categories: [
+                            {
+                                name: "Frontend",
+                                icon: "fa-solid fa-desktop",
+                                items: [
+                                    { name: "HTML5 & CSS3", level: 95 },
+                                    { name: "Vue.js 2/3", level: 90 },
+                                    { name: "React.js", level: 80 },
+                                    { name: "Bootstrap 5", level: 90 },
+                                    { name: "Flutter", level: 75 }
+                                ]
+                            },
+                            {
+                                name: "Backend",
+                                icon: "fa-solid fa-server",
+                                items: [
+                                    { name: "Node.js + TypeScript", level: 95 },
+                                    { name: "PHP", level: 85 },
+                                    { name: "CodeIgniter 3/4", level: 80 },
+                                    { name: "C# .NET", level: 75 }
+                                ]
+                            },
+                            {
+                                name: "Database",
+                                icon: "fa-solid fa-database",
+                                items: [
+                                    { name: "MySQL", level: 95 },
+                                    { name: "MariaDB", level: 95 },
+                                    { name: "MongoDB", level: 85 },
+                                    { name: "Odoo Integration", level: 80 }
+                                ]
+                            },
+                            {
+                                name: "DevOps & Tools",
+                                icon: "fa-solid fa-gears",
+                                items: [
+                                    { name: "GCP", level: 85 },
+                                    { name: "AWS Lambda", level: 75 },
+                                    { name: "Linux/MacOS", level: 90 },
+                                    { name: "Git", level: 85 }
+                                ]
+                            }
+                        ]
+                    },
+                    experience: {
+                        title: "My Experience",
+                        subtitle: "My professional journey",
+                        items: [
+                            {
+                                date: "2023 - Present",
+                                title: "Fullstack Developer",
+                                company: "Greicodex",
+                                description: "Development specializing in Node.js with TypeScript and Vue 3, applying Hexagonal Architecture and Clean Code principles. Built volunteer registration systems, pharmaceutical management platforms connected to Odoo, and maintained Flutter applications (myHownd). Responsible for AWS Lambda services and Elastic servers."
+                            },
+                            {
+                                date: "2023 - 2024",
+                                title: "Fullstack Developer Freelancer",
+                                company: "Apromcoca",
+                                description: "Designed and administered databases, developed backend APIs in Node.js with maintenance responsibilities. Frontend development with Vue.js and DevOps management in GCP. Project: Apromcoca.cranearsoft.com"
+                            },
+                            {
+                                date: "2022 - 2023",
+                                title: "Fullstack Developer",
+                                company: "Doctorplace Bolivia",
+                                description: "Full-stack development for doctorplace.com.bo. Designed and administered databases, developed backend with hexagonal architecture creating APIs with Node.js. Frontend with Vue.js 3, styling with Bootstrap, CSS, HTML. DevOps management in GCP."
+                            },
+                            {
+                                date: "2022",
+                                title: "Junior Fullstack Developer",
+                                company: "ADA Lenceria",
+                                description: "Database design and administration. Backend development in Node.js. Frontend development with Vue.js, handling styles with Bootstrap, CSS, and HTML."
+                            },
+                            {
+                                date: "2021",
+                                title: "Fullstack Junior Developer Intern",
+                                company: "Departamento de Educación Superior",
+                                description: "Developed the SIGGITT system for institute administration. Database design and development. Backend development in Node.js with TypeScript. Frontend development and design."
+                            },
+                            {
+                                date: "2019",
+                                title: "Teaching Assistant",
+                                company: "Universidad Mayor de San Simón",
+                                description: "Instructor for Introduction to Programming in Electronics and Electrical Engineering programs."
+                            },
+                            {
+                                date: "2017 - 2022",
+                                title: "Junior DBA Manager & Frontend Developer",
+                                company: "CranearSoft",
+                                description: "Design and administration of databases. Implementation of triggers, views, and procedures. Frontend development and design in various projects."
+                            }
+                        ]
+                    },
+                    projects: {
+                        title: "My Projects",
+                        subtitle: "Some of my recent work",
+                        liveText: "Live",
+                        items: [
+                            {
+                                title: "Volunteer Registration System",
+                                description: "Platform for volunteer registration with hierarchy, role assignment, and access control. Backend with Node.js using TypeScript and Hexagonal Architecture. Frontend with Vue 3. Complete database modeling and ORM integration.",
+                                icon: "fa-solid fa-users",
+                                tags: ["Node.js", "TypeScript", "Vue 3", "MySQL"]
+                            },
+                            {
+                                title: "Pharmaceutical Management System",
+                                description: "Management platform for pharmaceutical warehouses connected to Odoo database. Organizes drugstore orders and stock across multiple warehouses. Built with Hexagonal Architecture and Clean Code practices, includes full user and permission management.",
+                                icon: "fa-solid fa-pills",
+                                tags: ["Node.js", "Vue 3", "Odoo", "MongoDB"]
+                            },
+                            {
+                                title: "Warehouse Optimization Tool",
+                                description: "System that automates warehouse organization and tracking, connected to Odoo for internal logistics optimization. Features custom dashboards and task-based workflows.",
+                                icon: "fa-solid fa-warehouse",
+                                tags: ["TypeScript", "Vue.js", "Odoo", "GCP"]
+                            },
+                            {
+                                title: "myHownd App",
+                                description: "Flutter-based mobile application maintenance and updates. Improved stability and UX performance. Consumes AWS Lambda services and Elastic servers in Go.",
+                                icon: "fa-solid fa-mobile-alt",
+                                tags: ["Flutter", "AWS Lambda", "Go"]
+                            },
+                            {
+                                title: "DoctorPlace Platform",
+                                description: "Healthcare platform (doctorplace.com.bo) with hexagonal architecture. Backend APIs with Node.js, frontend with Vue.js 3, and DevOps in GCP.",
+                                icon: "fa-solid fa-hospital",
+                                tags: ["Node.js", "Vue 3", "GCP", "MariaDB"]
+                            },
+                            {
+                                title: "SIGGITT System",
+                                description: "Institute administration system for Departamento de Educación Superior. Complete database design, backend in Node.js with TypeScript, and custom frontend.",
+                                icon: "fa-solid fa-school",
+                                tags: ["Node.js", "TypeScript", "MySQL"]
+                            }
+                        ]
+                    },
+                    contact: {
+                        title: "Contact Me",
+                        subtitle: "Let's work together",
+                        phone: "Phone",
+                        location: "Location",
+                        form: {
+                            name: "Name",
+                            subject: "Subject",
+                            message: "Message",
+                            send: "Send Message"
                         }
-                        bandera=true;
+                    },
+                    footer: "All rights reserved."
+                },
+                es: {
+                    servicios: [
+                        "Desarrollo Web",
+                        "Desarrollo FullStack",
+                        "Administración de Bases de Datos",
+                        "Servicios DevOps"
+                    ],
+                    navs: [
+                        "Sobre mí",
+                        "Mis Habilidades",
+                        "Mi Experiencia",
+                        "Contáctame",
+                        "Read me in English",
+                        "Experto en",
+                        "",
+                        "Mis Proyectos"
+                    ],
+                    about: {
+                        title: "Sobre Mí",
+                        subtitle: "Conoce más sobre mí",
+                        text1: "Desarrollador Full Stack con Conocimientos en DevOps usando GCP, Programador con Fuertes Habilidades de Resolución de Problemas, Experto DBA especializado en Bases de Datos Estructuradas con MySQL y MariaDB, y Competente en Sistemas Operativos Linux y MacOS.",
+                        text2: "Me especializo en Node.js con TypeScript y Vue 3, aplicando principios robustos de arquitectura de software como Arquitectura Hexagonal y Código Limpio. Mi conjunto de habilidades incluye bases de datos relacionales (MySQL, MariaDB) y no relacionales (MongoDB).",
+                        stat1: "Años de Experiencia",
+                        stat2: "Proyectos Completados",
+                        stat3: "Clientes Satisfechos",
+                        stat4: "Tecnologías Dominadas"
+                    },
+                    skills: {
+                        title: "Mis Habilidades",
+                        subtitle: "Tecnologías que domino",
+                        categories: [
+                            {
+                                name: "Frontend",
+                                icon: "fa-solid fa-desktop",
+                                items: [
+                                    { name: "HTML5 & CSS3", level: 95 },
+                                    { name: "Vue.js 2/3", level: 90 },
+                                    { name: "React.js", level: 80 },
+                                    { name: "Bootstrap 5", level: 90 },
+                                    { name: "Flutter", level: 75 }
+                                ]
+                            },
+                            {
+                                name: "Backend",
+                                icon: "fa-solid fa-server",
+                                items: [
+                                    { name: "Node.js + TypeScript", level: 95 },
+                                    { name: "PHP", level: 85 },
+                                    { name: "CodeIgniter 3/4", level: 80 },
+                                    { name: "C# .NET", level: 75 }
+                                ]
+                            },
+                            {
+                                name: "Base de Datos",
+                                icon: "fa-solid fa-database",
+                                items: [
+                                    { name: "MySQL", level: 95 },
+                                    { name: "MariaDB", level: 95 },
+                                    { name: "MongoDB", level: 85 },
+                                    { name: "Integración Odoo", level: 80 }
+                                ]
+                            },
+                            {
+                                name: "DevOps y Herramientas",
+                                icon: "fa-solid fa-gears",
+                                items: [
+                                    { name: "GCP", level: 85 },
+                                    { name: "AWS Lambda", level: 75 },
+                                    { name: "Linux/MacOS", level: 90 },
+                                    { name: "Git", level: 85 }
+                                ]
+                            }
+                        ]
+                    },
+                    experience: {
+                        title: "Mi Experiencia",
+                        subtitle: "Mi trayectoria profesional",
+                        items: [
+                            {
+                                date: "2023 - Presente",
+                                title: "Desarrollador Fullstack",
+                                company: "Greicodex",
+                                description: "Desarrollo especializado en Node.js con TypeScript y Vue 3, aplicando Arquitectura Hexagonal y principios de Código Limpio. Construcción de sistemas de registro de voluntarios, plataformas de gestión farmacéutica conectadas a Odoo, y mantenimiento de aplicaciones Flutter (myHownd). Responsable de servicios AWS Lambda y servidores Elastic."
+                            },
+                            {
+                                date: "2023 - 2024",
+                                title: "Desarrollador Fullstack Freelancer",
+                                company: "Apromcoca",
+                                description: "Diseño y administración de bases de datos, desarrollo de APIs backend en Node.js con responsabilidades de mantenimiento. Desarrollo frontend con Vue.js y gestión DevOps en GCP. Proyecto: Apromcoca.cranearsoft.com"
+                            },
+                            {
+                                date: "2022 - 2023",
+                                title: "Desarrollador Fullstack",
+                                company: "Doctorplace Bolivia",
+                                description: "Desarrollo full-stack para doctorplace.com.bo. Diseño y administración de bases de datos, desarrollo backend con arquitectura hexagonal creando APIs con Node.js. Frontend con Vue.js 3, estilos con Bootstrap, CSS, HTML. Gestión DevOps en GCP."
+                            },
+                            {
+                                date: "2022",
+                                title: "Desarrollador Fullstack Junior",
+                                company: "ADA Lenceria",
+                                description: "Diseño y administración de bases de datos. Desarrollo backend en Node.js. Desarrollo frontend con Vue.js, manejo de estilos con Bootstrap, CSS y HTML."
+                            },
+                            {
+                                date: "2021",
+                                title: "Desarrollador Fullstack Junior Practicante",
+                                company: "Departamento de Educación Superior",
+                                description: "Desarrollo del sistema SIGGITT para administración de institutos. Diseño y desarrollo de base de datos. Desarrollo backend en Node.js con TypeScript. Desarrollo y diseño frontend."
+                            },
+                            {
+                                date: "2019",
+                                title: "Auxiliar de Docencia",
+                                company: "Universidad Mayor de San Simón",
+                                description: "Instructor de Introducción a la Programación en programas de Ingeniería Electrónica y Eléctrica."
+                            },
+                            {
+                                date: "2017 - 2022",
+                                title: "Gerente DBA Junior y Desarrollador Frontend",
+                                company: "CranearSoft",
+                                description: "Diseño y administración de bases de datos. Implementación de triggers, vistas y procedimientos. Desarrollo y diseño frontend en varios proyectos."
+                            }
+                        ]
+                    },
+                    projects: {
+                        title: "Mis Proyectos",
+                        subtitle: "Algunos de mis trabajos recientes",
+                        liveText: "Ver",
+                        items: [
+                            {
+                                title: "Sistema de Registro de Voluntarios",
+                                description: "Plataforma de registro de voluntarios con jerarquía, asignación de roles y control de acceso. Backend con Node.js usando TypeScript y Arquitectura Hexagonal. Frontend con Vue 3. Modelado completo de base de datos e integración ORM.",
+                                icon: "fa-solid fa-users",
+                                tags: ["Node.js", "TypeScript", "Vue 3", "MySQL"]
+                            },
+                            {
+                                title: "Sistema de Gestión Farmacéutica",
+                                description: "Plataforma de gestión para almacenes farmacéuticos conectada a base de datos Odoo. Organiza pedidos de farmacias y stock en múltiples almacenes. Construido con Arquitectura Hexagonal y prácticas de Código Limpio, incluye gestión completa de usuarios y permisos.",
+                                icon: "fa-solid fa-pills",
+                                tags: ["Node.js", "Vue 3", "Odoo", "MongoDB"]
+                            },
+                            {
+                                title: "Herramienta de Optimización de Almacén",
+                                description: "Sistema que automatiza la organización y seguimiento de almacenes, conectado a Odoo para optimización de logística interna. Incluye dashboards personalizados y flujos de trabajo basados en tareas.",
+                                icon: "fa-solid fa-warehouse",
+                                tags: ["TypeScript", "Vue.js", "Odoo", "GCP"]
+                            },
+                            {
+                                title: "App myHownd",
+                                description: "Mantenimiento y actualizaciones de aplicación móvil basada en Flutter. Mejoró estabilidad y rendimiento UX. Consume servicios AWS Lambda y servidores Elastic en Go.",
+                                icon: "fa-solid fa-mobile-alt",
+                                tags: ["Flutter", "AWS Lambda", "Go"]
+                            },
+                            {
+                                title: "Plataforma DoctorPlace",
+                                description: "Plataforma de salud (doctorplace.com.bo) con arquitectura hexagonal. APIs backend con Node.js, frontend con Vue.js 3, y DevOps en GCP.",
+                                icon: "fa-solid fa-hospital",
+                                tags: ["Node.js", "Vue 3", "GCP", "MariaDB"]
+                            },
+                            {
+                                title: "Sistema SIGGITT",
+                                description: "Sistema de administración de institutos para Departamento de Educación Superior. Diseño completo de base de datos, backend en Node.js con TypeScript, y frontend personalizado.",
+                                icon: "fa-solid fa-school",
+                                tags: ["Node.js", "TypeScript", "MySQL"]
+                            }
+                        ]
+                    },
+                    contact: {
+                        title: "Contáctame",
+                        subtitle: "Trabajemos juntos",
+                        phone: "Teléfono",
+                        location: "Ubicación",
+                        form: {
+                            name: "Nombre",
+                            subject: "Asunto",
+                            message: "Mensaje",
+                            send: "Enviar Mensaje"
+                        }
+                    },
+                    footer: "Todos los derechos reservados."
+                },
+                mensaje: "",
+                index: 0,
+                darkMode: false,
+                intervalos: ''
+            },
+            methods: {
+                reload() {
+                    this.locale = !this.locale;
+                    clearInterval(this.intervalos);
+                    this.mensaje = "";
+                    this.index = 0;
+                    this.deletrear();
+                },
+                deletrear() {
+                    this.actual = this.locale ? this.en : this.es;
+                    let index = 0;
+                    let bandera = true;
+                    
+                    this.intervalos = setInterval(() => {
+                        if (bandera) {
+                            this.mensaje = this.actual.servicios[this.index].substring(0, index);
+                            index++;
+                            if (index > this.actual.servicios[this.index].length) {
+                                setTimeout(() => {
+                                    bandera = false;
+                                }, 2000);
+                            }
+                        } else {
+                            this.mensaje = this.actual.servicios[this.index].substring(0, index);
+                            index--;
+                            if (index < 0) {
+                                this.index++;
+                                if (this.index == this.actual.servicios.length) {
+                                    this.index = 0;
+                                }
+                                bandera = true;
+                                index = 0;
+                            }
+                        }
+                    }, 100);
+                },
+                changeMode() {
+                    this.darkMode = !this.darkMode;
+                    document.body.classList.toggle('dark');
+                },
+                submitForm() {
+                    alert(this.locale 
+                        ? 'Message sent successfully! I will contact you soon.' 
+                        : '¡Mensaje enviado con éxito! Te contactaré pronto.');
+                    this.formData = {
+                        name: '',
+                        email: '',
+                        subject: '',
+                        message: ''
+                    };
+                },
+                setInitialTheme() {
+                    const currentHour = new Date().getHours();
+                    // Assuming night mode is from 6 PM (18) to 6 AM (6)
+                    if (currentHour >= 18 || currentHour < 6) {
+                        this.darkMode = true;
+                        document.body.classList.add('dark');
+                    } else {
+                        this.darkMode = false;
+                        document.body.classList.remove('dark');
                     }
                 }
-            }, 200);
-        },
-         changeMode() {
-            this.darkMode = !this.darkMode;
-            document.body.classList.toggle('dark');
-        }
-    },mounted(){
-        this.deletrear();
-        this.changeMode();
-    }
-  });
-</script>
+            },
+            mounted() {
+                this.deletrear();
+                this.setInitialTheme();
+            }
+        });
+    </script>
 </body>
-<footer>
-</footer>
 </html>
